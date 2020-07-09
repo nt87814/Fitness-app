@@ -97,10 +97,83 @@ An app for landlords to find tenants and for tenants to search for places to ren
 ### [BONUS] Interactive Prototype
 
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+#### Workout
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | id      | String   | unique id for the user post (default field) |
+   | author        | Pointer to User| image author |
+   | image         | File     | image that user posts |
+   | caption       | String   | image caption by author |
+   | workout       | String   | workout description |
+   | time       | Number   | time of workout |
+   | count       | Number   | reps of workout |
+   | rating       | Number   | average rating of workout |
+   | comments_count | Number   | number of comments that has been posted to an image |
+   | likes_count    | Number   | number of likes for the post |
+   | deadline     | DateTime | date when post expires |
+   | created_at     | DateTime | date when post is created (default field) |
+   | updated_at     | DateTime | date when post is last updated (default field) |
+   
+   #### Challenge
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | id      | String   | unique id for the user post (default field) |
+   | workout_id  | String   | workout that is being challenged |
+   | recipients        | Array of pointers to User| the users the author sent this to |
+   | owner        | Pointer to User| the author sent this to |
+   
+   
+   #### User
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | id      | String   | unique id for the user post (default field) |  
+   | first_name      | String   | User's first name |  
+   | last_name      | String   | User's last name |
+   | password      | String   | User's password |
+   | created_at     | DateTime | date when post is created (default field) |
+   | updated_at     | DateTime | date when post is last updated (default field) |
+   
+   #### Relationships
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | id      | String   | unique id for the user post (default field) |  
+   | follower_id      | String   | unique id for the user who followed first |  
+   | followed_id      | String   | unique id for the user who followed second |
+   | created_at     | DateTime | date when post is created (default field) |
+   | updated_at     | DateTime | date when post is last updated (default field) |
+   
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
+
+   - Home Feed Screen
+      - (Read/GET) Query all posts where author is from following
+      - (Create/POST) Create a new like on a post
+      - (Delete) Delete existing like
+      - (Create/POST) Create a new comment on a post
+      - (Delete) Delete existing comment
+
+   - Post Detail Screen
+      - (Create/POST) Create a new challenge from a post
+   - Create Post Screen
+      - (Create/POST) Create a new post object
+   - Profile Screen
+      - (Read/GET) Query logged in user object
+         ```swift
+         let query = PFQuery(className:"Post")
+         query.whereKey("author", equalTo: currentUser)
+         query.order(byDescending: "createdAt")
+         query.findObjectsInBackground { (posts: [PFObject]?, error: Error?) in
+            if let error = error { 
+               print(error.localizedDescription)
+            } else if let posts = posts {
+               print("Successfully retrieved \(posts.count) posts.")
+           // TODO: Do something with posts...
+            }
+         }
+         ```
+      - (Update/PUT) Update user profile image
+
 - [OPTIONAL: List endpoints if using existing API such as Yelp]
