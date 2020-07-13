@@ -1,7 +1,7 @@
-Tenant Finder - README
+Social Fitness - README
 ===
 
-# Tenant Finder
+# Social Fitness
 
 ## Table of Contents
 1. [Overview](#Overview)
@@ -30,33 +30,30 @@ An app for landlords to find tenants and for tenants to search for places to ren
 
 * User can log in
 * User can create an account
-* User can view potential properties in timeline feed
-* submit an application (id, references, work history)
-* User can favorite properties
+* User can view challenge list
+* User can create a new workout
+* User can start challenges
 * User can view profile page
-* User can view property detail page
-* User can upload a property item
+* User can view workout detail page
 
 **Optional Nice-to-have Stories**
-* User can search for properties by location, price
+* User can search for workouts
 ### 2. Screen Archetypes
 
 * Login screen
    * User can login
 * Registration screen
    * User can create a new account
- * Property Stream
-   * User can view a stream of properties
- * Property Detail 
+ * Workout Stream
+   * User can view a stream of challenges
+ * Workout Detail 
    * Displays details not in the stream
-   * User can create an application
-   * User can contact the property manager
- * Property creation
-   * User can post a new property 
+ * Workout creation
+   * User can post a new workout
    * User can upload a description
    * User can upload photos
  * Search
-   * User can search by location, price
+   * User can search by type
  * Profile
    * User can view information about their own account
    * User can view other user's profiles
@@ -68,7 +65,7 @@ An app for landlords to find tenants and for tenants to search for places to ren
 **Tab Navigation** (Tab to Screen)
 
 * Home Feed
-* Post a property 
+* Post a workout 
 * Search
 * Profile detail
 
@@ -79,9 +76,9 @@ An app for landlords to find tenants and for tenants to search for places to ren
 * Registration Screen
    * Home
 * Home feed
-   * Property detail
+   * Workout detail
 * Search
-   * Property detail
+   * Workout detail
    * Other user profile
 * Creation Screen
    * Home (after you finish posting the photo)
@@ -98,6 +95,7 @@ An app for landlords to find tenants and for tenants to search for places to ren
 
 ## Schema 
 ### Models
+
 #### Workout
 
    | Property      | Type     | Description |
@@ -107,22 +105,22 @@ An app for landlords to find tenants and for tenants to search for places to ren
    | image         | File     | image that user posts |
    | caption       | String   | image caption by author |
    | workout       | String   | workout description |
-   | time       | Number   | time of workout |
-   | count       | Number   | reps of workout |
-   | rating       | Number   | average rating of workout |
-   | comments_count | Number   | number of comments that has been posted to an image |
+   | time       | Number   | time of workout (for running, biking)|
+   | difficulty_rating | Number   | average rating of workout |
    | likes_count    | Number   | number of likes for the post |
-   | deadline     | DateTime | date when post expires |
    | created_at     | DateTime | date when post is created (default field) |
-   | updated_at     | DateTime | date when post is last updated (default field) |
    
    #### Challenge
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | id      | String   | unique id for the user post (default field) |
+   | owner_id        | Pointer to User| the author sent this to |
    | workout_id  | String   | workout that is being challenged |
    | recipients        | Array of pointers to User| the users the author sent this to |
-   | owner        | Pointer to User| the author sent this to |
+   | Pointer to User| the author sent this to |
+   | deadline     | DateTime | date when post expires |
+   | completed     | Boolean | Shows whether the user has completed the challenge in time |
+
    
    
    #### User
@@ -135,16 +133,8 @@ An app for landlords to find tenants and for tenants to search for places to ren
    | password      | String   | User's password |
    | created_at     | DateTime | date when post is created (default field) |
    | updated_at     | DateTime | date when post is last updated (default field) |
+   | friends      | Array of user ids   | List of friends |
    
-   #### Relationships
-
-   | Property      | Type     | Description |
-   | ------------- | -------- | ------------|
-   | id      | String   | unique id for the user post (default field) |  
-   | follower_id      | String   | unique id for the user who followed first |  
-   | followed_id      | String   | unique id for the user who followed second |
-   | created_at     | DateTime | date when post is created (default field) |
-   | updated_at     | DateTime | date when post is last updated (default field) |
    
 ### Networking
 
